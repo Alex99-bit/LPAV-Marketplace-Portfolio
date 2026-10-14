@@ -9,13 +9,13 @@ Este repositorio se publica exclusivamente como muestra de portafolio y demostra
 LPAV Marketplace está diseñado para centralizar el ciclo completo de una operación turística:
 
 - Marketplace de paquetes y perfiles públicos de agencias.
-- Registro, autenticación y flujos diferenciados para viajeros, agencias y administradores.
+- Registro, autenticación y flujos diferenciados para viajeros y agencias.
 - CRM integrado para leads, actividades, asignación de agentes y seguimiento comercial.
 - Chat interno para la comunicación entre clientes y agencias.
 - Gestión de flyers, catálogos, itinerarios, reseñas y contenido comercial.
 - Paneles de analítica, ventas, logística y finanzas para agencias.
 - Checkout y funcionalidades de marketplace orientadas a pagos y comisiones.
-- Administración de planes, usuarios, roles y configuración multi-tenant.
+- Gestión de planes, roles y configuración multi-tenant mediante API protegida.
 - Páginas legales, consentimiento de cookies y validaciones de seguridad.
 - Soporte de internacionalización mediante i18next.
 
@@ -47,10 +47,6 @@ Dashboard para administrar el perfil comercial, flyers, paquetes, clientes, lead
 ### CRM
 
 Gestión de leads y actividades comerciales, filtros, métricas, asignación de agentes, calificación asistida y chat integrado.
-
-### Administración
-
-Panel de supervisión para agencias, usuarios, roles, planes, configuración de la plataforma y operaciones financieras.
 
 ### Seguridad Y Cumplimiento
 
