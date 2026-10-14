@@ -1,0 +1,124 @@
+import { Routes, Route } from "react-router";
+import { AuthProvider } from "@/context/AuthContext";
+import { CartProvider } from "@/context/CartContext";
+import { ThemeProvider } from "@/context/ThemeContext";
+import { ToastProvider } from "@/components/ui/Toast";
+import { useAuth } from "@/context/AuthContext";
+import type { ReactNode } from "react";
+import Layout from "@/components/layout/Layout";
+import AgencyLayout from "@/components/agency/AgencyLayout";
+import AuthGuard from "@/components/auth/AuthGuard";
+import LoginPage from "@/pages/auth/LoginPage";
+import AgencyAuth from "@/pages/auth/AgencyAuth";
+import AgencyPostRegister from "@/pages/auth/AgencyPostRegister";
+import AcceptInvitation from "@/pages/auth/AcceptInvitation";
+import Home from "@/pages/Home";
+import PackageDetailPage from "@/pages/PackageDetailPage";
+import AgencyDashboard from "@/pages/AgencyDashboard";
+import AgencyFlyers from "@/pages/AgencyFlyers";
+import AgencyRoles from "@/pages/AgencyRoles";
+import AgencyCRM from "@/pages/AgencyCRM";
+import AgencyFinance from "@/pages/AgencyFinance";
+import AgencyLogistics from "@/pages/AgencyLogistics";
+import AgencySettings from "@/pages/AgencySettings";
+import AgencyAnalytics from "@/pages/AgencyAnalytics";
+import Checkout from "@/pages/Checkout";
+import Orders from "@/pages/Orders";
+import Chat from "@/pages/Chat";
+import ConnectDemo from "@/pages/ConnectDemo";
+import AgencyPublicProfilePage from "@/pages/AgencyPublicProfilePage";
+import TermsPage from "@/pages/legal/TermsPage";
+import AgencyTermsPage from "@/pages/legal/AgencyTermsPage";
+import PrivacyPage from "@/pages/legal/PrivacyPage";
+import CookiePolicyPage from "@/pages/legal/CookiePolicyPage";
+import ContactPage from "@/pages/legal/ContactPage";
+import NotFound from "@/pages/NotFound";
+
+/* Wrapper para que CartProvider reciba el userId sin importar AuthContext.
+   Evita dependencia circular y permite que los tests mockeen AuthContext
+   por separado. */
+function CartBridge({ children }: { children: ReactNode }) {
+  const { user } = useAuth();
+  return <CartProvider userId={user?.id}>{children}</CartProvider>;
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <AuthProvider>
+        <CartBridge>
+          <ToastProvider>
+          <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/package/:id" element={<PackageDetailPage />} />
+            <Route path="/auth/login" element={<LoginPage />} />
+            <Route path="/auth/agency" element={<AgencyAuth />} />
+            <Route
+              path="/agency/post-register"
+              element={
+                <AuthGuard requireAgency>
+                  <AgencyPostRegister />
+                </AuthGuard>
+              }
+            />
+            <Route path="/auth/accept-invite" element={<AcceptInvitation />} />
+            <Route
+              path="/checkout"
+              element={
+                <AuthGuard requireTraveler>
+                  <Checkout />
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/orders"
+              element={
+                <AuthGuard requireTraveler>
+                  <Orders />
+                </AuthGuard>
+              }
+            />
+            <Route path="/agency/profile/:tenantId" element={<AgencyPublicProfilePage />} />
+            <Route path="/connect-demo" element={<ConnectDemo />} />
+            <Route path="/terms" element={<TermsPage />} />
+            <Route path="/terms/agency" element={<AgencyTermsPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/cookies" element={<CookiePolicyPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route
+              path="/chat"
+              element={
+                <AuthGuard>
+                  <Chat />
+                </AuthGuard>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+
+          <Route
+            element={
+              <AuthGuard requireAgency>
+                <AgencyLayout />
+              </AuthGuard>
+            }
+          >
+            <Route path="/agency/dashboard" element={<AgencyDashboard />} />
+            <Route path="/agency/flyers" element={<AgencyFlyers />} />
+            <Route path="/agency/roles" element={<AgencyRoles />} />
+            <Route path="/agency/crm" element={<AgencyCRM />} />
+            <Route path="/agency/finance" element={<AgencyFinance />} />
+            <Route path="/agency/logistics" element={<AgencyLogistics />} />
+            <Route path="/agency/settings" element={<AgencySettings />} />
+            <Route path="/agency/analytics" element={<AgencyAnalytics />} />
+            <Route path="/agency/chat" element={<Chat />} />
+          </Route>
+
+          </Routes>
+        </ToastProvider>
+      </CartBridge>
+    </AuthProvider>
+  </ThemeProvider>
+  );
+}

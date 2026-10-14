@@ -1,0 +1,13 @@
+{
+  "servers": [
+    {
+      "name": "github.com/upstash/context7-mcp",
+      "url": "https://mcp.context7.com/mcp"
+    },
+    {
+      "name": "playwright",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-playwright"]
+    }
+  ]
+}
